@@ -1,9 +1,9 @@
 package com.intraway.fizzbuzz;
 
-import com.intraway.fizzbuzz.controller.FizzBuzzController;
 import com.intraway.fizzbuzz.exceptions.BadRequest;
 import com.intraway.fizzbuzz.model.Operation;
 import com.intraway.fizzbuzz.repository.OperationsRepository;
+import com.intraway.fizzbuzz.service.FizzBuzzService;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,8 +25,8 @@ public class FizzbuzzApplicationTests {
 		int min = ThreadLocalRandom.current().nextInt(10, 20);
 		int max = ThreadLocalRandom.current().nextInt(1, 9);
 
-		FizzBuzzController fizzBuzzController = new FizzBuzzController();
-		fizzBuzzController.validateRange(min, max);
+		FizzBuzzService fizzBuzzService = new FizzBuzzService();
+		fizzBuzzService.validateRange(min, max);
 	}
 
 	@Test
@@ -36,31 +36,31 @@ public class FizzbuzzApplicationTests {
 		String expected2 = "Buzz,-4,Fizz,-2,-1,FizzBuzz,1,2,Fizz,4,Buzz";
 		String expected3 = "1,2,Fizz";
 
-		FizzBuzzController fizzBuzzController = new FizzBuzzController();
+		FizzBuzzService fizzBuzzService = new FizzBuzzService();
 
-		items = fizzBuzzController.validateNumbersMultiples(1,15);
+		items = fizzBuzzService.validateNumbersMultiples(1,15);
 		Assert.assertEquals(expected1,items);
 
-		items = fizzBuzzController.validateNumbersMultiples(-5,5);
+		items = fizzBuzzService.validateNumbersMultiples(-5,5);
 		Assert.assertEquals(expected2,items);
 
-		items = fizzBuzzController.validateNumbersMultiples(1,3);
+		items = fizzBuzzService.validateNumbersMultiples(1,3);
 		Assert.assertEquals(expected3,items);
 	}
 
 	@Test
 	public void testMessages() {
 		OperationsRepository operationsRepositoryMock = mock(OperationsRepository.class);
-		FizzBuzzController fizzBuzzController = new FizzBuzzController(operationsRepositoryMock);
+		FizzBuzzService fizzBuzzService = new FizzBuzzService(operationsRepositoryMock);
 
 		Operation operation = new Operation();
 		operation.setId(1L);
 		when(operationsRepositoryMock.save(any(Operation.class))).thenReturn(operation);
 
-		Assert.assertEquals(NO_MULTIPLOS, fizzBuzzController.getNumbersList(1,2).getDescription());
-		Assert.assertEquals(MULTIPLOS_DE_3, fizzBuzzController.getNumbersList(1,3).getDescription());
-		Assert.assertEquals(MULTIPLOS_DE_5, fizzBuzzController.getNumbersList(5,5).getDescription());
-		Assert.assertEquals(MULTIPLOS_DE_3_Y_5, fizzBuzzController.getNumbersList(1,5).getDescription());
+		Assert.assertEquals(NO_MULTIPLOS, fizzBuzzService.getNumbersList(1,2).getDescription());
+		Assert.assertEquals(MULTIPLOS_DE_3, fizzBuzzService.getNumbersList(1,3).getDescription());
+		Assert.assertEquals(MULTIPLOS_DE_5, fizzBuzzService.getNumbersList(5,5).getDescription());
+		Assert.assertEquals(MULTIPLOS_DE_3_Y_5, fizzBuzzService.getNumbersList(1,5).getDescription());
 	}
 
 }
