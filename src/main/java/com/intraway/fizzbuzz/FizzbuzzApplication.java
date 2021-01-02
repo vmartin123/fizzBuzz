@@ -9,4 +9,5 @@ public class FizzbuzzApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FizzbuzzApplication.class, args);
 	}
+	
 }
